@@ -69,3 +69,13 @@ jobs:
         elif [ "${{ inputs.entorno }}" == "api" ]; then
           mvn clean verify -Denvironment="api" -Dcucumber.filter.tags="@test-api" -DskipTests=false
         fi  
+    - name: Generate report
+      run: |
+        mvn serenity:aggregate
+        mvn serenity:reports
+
+    - name: UploadReport
+      uses: actions/upload-artifact@v3
+      with:
+        name: Generate report
+        path: ~/reports
