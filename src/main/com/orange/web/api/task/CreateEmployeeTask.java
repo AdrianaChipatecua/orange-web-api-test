@@ -42,7 +42,6 @@ public class CreateEmployeeTask implements Task {
     String uniqueFirstName = firstName + randomNumber;
     String uniqueLastName = lastName + randomNumber;
     String username = ShuffleVariable.getShuffleString(lastName) + randomNumber;
-System.out.println(username + "5d4s5f64ds64f6sd******************************");
     String uniqueEmployeeId;
 
 
@@ -56,7 +55,7 @@ System.out.println(username + "5d4s5f64ds64f6sd******************************");
         Enter.theValue(uniqueLastName).into(CreateEmployeePimOptionPage.INP_LAST_NAME));
 
     String employeeId = CreateEmployeePimOptionPage.INP_EMPLOYEE_ID.resolveFor(actor).getValue();
-    System.out.println("Generated Employee ID: " + employeeId);
+
 
     actor.attemptsTo(
         Enter.theValue(String.valueOf(randomNumber)).into(CreateEmployeePimOptionPage.INP_EMPLOYEE_ID),

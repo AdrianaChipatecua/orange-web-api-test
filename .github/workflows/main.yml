@@ -59,7 +59,7 @@ jobs:
     - name: Run scenarios
       env:
         WEB_URL: ${{ secrets.WEB_URL }}
-        SUCCESSFUL_USER: ${{ secrets.SUCCESSFUL_USER }}
+        SUCCESSFUL_USER: ${{ secrets.SUCCESSFUL_USER_NAME }}
         SUCCESSFUL_PASSWORD: ${{ secrets.SUCCESSFUL_PASSWORD }}
         BASE_ENDPOINT: ${{ secrets.BASE_ENDPOINT }}
         USER_TOKEN: ${{ secrets.USER_TOKEN }}

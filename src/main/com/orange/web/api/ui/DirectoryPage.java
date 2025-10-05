@@ -18,7 +18,7 @@ public class DirectoryPage {
       .locatedBy("//div[@role='listbox']//div[normalize-space()='{0}']");
   public static final Target DROPDOWN_CONTAINER = Target.the("contenedor del dropdown")
       .located(By.xpath("//div[@role='listbox']"));
-  public static final Target BTN_SEARCH = Target.the("button search").locatedBy("button[type='submit']");
+  public static final Target BTN_SEARCH = Target.the("button search").located(By.cssSelector("button[type='submit']"));
 
   public static final Target NAME_USER_RESULT = Target.the("name user result")
       .locatedBy(".oxd-text.oxd-text--p.orangehrm-directory-card-header.--break-words");

@@ -25,9 +25,6 @@ public class SearchEmployeeTask implements Task {
     String lastName = actor.recall(CreateUserConstants.LAST_NAME);
     String employeeFullName = firstName + " " + lastName;
 
-    System.out.println(employeeFullName);
-
-
     CommonQuestions.elementIsPresent(DirectoryPage.TITLE_DIRECTORY_PAGE);
     CommonQuestions.elementIsPresent(DirectoryPage.LBL_EMPLOYEE_NAME);
 
@@ -35,8 +32,9 @@ public class SearchEmployeeTask implements Task {
         Enter.theValue(firstName).into(DirectoryPage.INP_EMPLOYEE_NAME),
         WaitUntil.the(DirectoryPage.DROPDOWN_CONTAINER, isVisible())
             .forNoMoreThan(15).seconds(),
-        WaitUntil.the(DirectoryPage.getDropdownOption(employeeFullName), isVisible()),
+        WaitUntil.the(DirectoryPage.getDropdownOption(employeeFullName), isVisible()).forNoMoreThan(15).seconds(),
         Click.on(DirectoryPage.getDropdownOption(employeeFullName)),
+        WaitUntil.the((DirectoryPage.BTN_SEARCH),isVisible()).forNoMoreThan(8).seconds(),
         Click.on(DirectoryPage.BTN_SEARCH),
         WaitUntil.the((DirectoryPage.NAME_USER_RESULT), isVisible()).forNoMoreThan(8).seconds()
     );
