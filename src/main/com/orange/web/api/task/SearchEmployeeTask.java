@@ -15,25 +15,31 @@ import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisi
 public class SearchEmployeeTask implements Task {
 
 
+  public static SearchEmployeeTask validateNewEmployee() {
+    return instrumented(SearchEmployeeTask.class);
+  }
+
   @Override
   public <T extends Actor> void performAs(T actor) {
-    String userName = actor.recall(CreateUserConstants.USER_NAME);
-    String employeeId = actor.recall(CreateUserConstants.EMPLOYEE_ID);
-    String employeeName = actor.recall(CreateUserConstants.FIRST_NAME+" "+CreateUserConstants.LAST_NAME);
+    String firstName = actor.recall(CreateUserConstants.FIRST_NAME);
+    String lastName = actor.recall(CreateUserConstants.LAST_NAME);
+    String employeeFullName = firstName + " " + lastName;
+
+    System.out.println(employeeFullName);
 
 
     CommonQuestions.elementIsPresent(DirectoryPage.TITLE_DIRECTORY_PAGE);
     CommonQuestions.elementIsPresent(DirectoryPage.LBL_EMPLOYEE_NAME);
 
     actor.attemptsTo(
-        Enter.theValue(employeeName).into(DirectoryPage.INP_EMPLOYEE_NAME),
+        Enter.theValue(firstName).into(DirectoryPage.INP_EMPLOYEE_NAME),
         WaitUntil.the(DirectoryPage.DROPDOWN_CONTAINER, isVisible())
-            .forNoMoreThan(5).seconds(),
-        Click.on(DirectoryPage.DROPDOWN_OPTION.of(employeeName))
+            .forNoMoreThan(15).seconds(),
+        WaitUntil.the(DirectoryPage.getDropdownOption(employeeFullName), isVisible()),
+        Click.on(DirectoryPage.getDropdownOption(employeeFullName)),
+        Click.on(DirectoryPage.BTN_SEARCH),
+        WaitUntil.the((DirectoryPage.NAME_USER_RESULT), isVisible()).forNoMoreThan(8).seconds()
     );
-  }
-
-  public static SearchEmployeeTask validateNewEmployee() {
-    return instrumented(SearchEmployeeTask.class);
+    CommonQuestions.textEqualsTarget(DirectoryPage.NAME_USER_RESULT, employeeFullName);
   }
 }

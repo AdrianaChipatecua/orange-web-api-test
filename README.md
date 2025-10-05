@@ -31,7 +31,6 @@ To execute the tests, please run the next command :
 2 Under test-orange-web-api repository name, click  Actions. 
 
 
-
 3 In the left sidebar, click “Test Orange” to start the workflow.
 
 

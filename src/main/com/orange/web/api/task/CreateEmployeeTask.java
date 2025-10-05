@@ -5,6 +5,7 @@ import com.orange.web.api.constans.CreateUserConstants;
 import com.orange.web.api.interactions.UploadFileInteraction;
 import com.orange.web.api.ui.CreateEmployeePimOptionPage;
 import com.orange.web.api.ui.PimPage;
+import com.orange.web.api.utils.ShuffleVariable;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
@@ -40,8 +41,9 @@ public class CreateEmployeeTask implements Task {
 
     String uniqueFirstName = firstName + randomNumber;
     String uniqueLastName = lastName + randomNumber;
-    String username = firstName + lastName + randomNumber;
-
+    String username = ShuffleVariable.getShuffleString(lastName) + randomNumber;
+System.out.println(username + "5d4s5f64ds64f6sd******************************");
+    String uniqueEmployeeId;
 
 
     actor.attemptsTo(
@@ -51,7 +53,12 @@ public class CreateEmployeeTask implements Task {
         WaitUntil.the(CreateEmployeePimOptionPage.INP_FIRST_NAME, isEnabled())
             .forNoMoreThan(15).seconds(),
         Enter.theValue(uniqueFirstName).into(CreateEmployeePimOptionPage.INP_FIRST_NAME),
-        Enter.theValue(uniqueLastName).into(CreateEmployeePimOptionPage.INP_LAST_NAME),
+        Enter.theValue(uniqueLastName).into(CreateEmployeePimOptionPage.INP_LAST_NAME));
+
+    String employeeId = CreateEmployeePimOptionPage.INP_EMPLOYEE_ID.resolveFor(actor).getValue();
+    System.out.println("Generated Employee ID: " + employeeId);
+
+    actor.attemptsTo(
         Enter.theValue(String.valueOf(randomNumber)).into(CreateEmployeePimOptionPage.INP_EMPLOYEE_ID),
         Click.on(CreateEmployeePimOptionPage.OPT_SWITCH_LOGIN_DETAILS),
         Enter.theValue(username).into(CreateEmployeePimOptionPage.INP_USER_NAME),
@@ -60,11 +67,11 @@ public class CreateEmployeeTask implements Task {
         UploadFileInteraction.photoUpload(imagePath, CreateEmployeePimOptionPage.IMG_PHOTO_UPLOAD),
         Click.on(CreateEmployeePimOptionPage.BTN_SAVE_EMPLOYEE)
     );
-
+    uniqueEmployeeId = employeeId + randomNumber;
     actor.remember(CreateUserConstants.USER_NAME, username);
     actor.remember(CreateUserConstants.FIRST_NAME, uniqueFirstName);
     actor.remember(CreateUserConstants.LAST_NAME, uniqueLastName);
-    actor.remember(CreateUserConstants.EMPLOYEE_ID, String.valueOf(randomNumber));
+    actor.remember(CreateUserConstants.EMPLOYEE_ID, uniqueEmployeeId);
 
   }
 

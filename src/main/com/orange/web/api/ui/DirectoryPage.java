@@ -19,9 +19,13 @@ public class DirectoryPage {
   public static final Target DROPDOWN_CONTAINER = Target.the("contenedor del dropdown")
       .located(By.xpath("//div[@role='listbox']"));
   public static final Target BTN_SEARCH = Target.the("button search").locatedBy("button[type='submit']");
-  public static final Target LBL_RESULT_SEARCH = Target.the("label result search")
-      .locatedBy("//div[@class='orangehrm-directory-table']//span");
+
   public static final Target NAME_USER_RESULT = Target.the("name user result")
       .locatedBy(".oxd-text.oxd-text--p.orangehrm-directory-card-header.--break-words");
+
+  public static Target getDropdownOption(String name) {
+    return Target.the("Opción del autocomplete")
+        .locatedBy("//div[@role='listbox']//div[normalize-space()='" + name + "']");
+  }
 
 }

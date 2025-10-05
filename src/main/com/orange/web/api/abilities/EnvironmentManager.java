@@ -7,12 +7,12 @@ import net.thucydides.model.util.EnvironmentVariables;
 import net.thucydides.model.webdriver.Configuration;
 
 public class EnvironmentManager {
-    private static final Configuration<?> CONFIGURATION =
-            new SystemPropertiesConfiguration(SystemEnvironmentVariables.createEnvironmentVariables());
+  private static final Configuration<?> CONFIGURATION =
+      new SystemPropertiesConfiguration(SystemEnvironmentVariables.createEnvironmentVariables());
 
-    private static final EnvironmentVariables environmentVariables = CONFIGURATION.getEnvironmentVariables();
+  private static final EnvironmentVariables environmentVariables = CONFIGURATION.getEnvironmentVariables();
 
-    public static final String BASE_ENDPOINT =
-            EnvironmentSpecificConfiguration.from(environmentVariables).getProperty("base.endpoint");
+  public static final String BASE_ENDPOINT =
+      EnvironmentSpecificConfiguration.from(environmentVariables).getProperty("base.endpoint");
 
 }
