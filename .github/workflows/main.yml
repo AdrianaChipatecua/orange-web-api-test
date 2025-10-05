@@ -69,6 +69,8 @@ jobs:
         elif [ "${{ inputs.entorno }}" == "api" ]; then
           mvn clean verify -Denvironment="api" -Dcucumber.filter.tags="@test-api" -DskipTests=false
         fi
+    - name: List Serenity Report
+      run: ls -R target/site/serenity || echo "No files found"
     - name: UploadReport
       uses: actions/upload-artifact@v4
       with:
