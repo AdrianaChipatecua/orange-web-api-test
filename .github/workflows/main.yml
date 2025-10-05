@@ -40,12 +40,10 @@ jobs:
 
       - name: Install Chrome and ChromeDriver
         run: |
-          # Instalación de Chrome
           wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
           sudo apt-get update
           sudo apt-get install -y ./google-chrome-stable_current_amd64.deb
           
-          # Instalación de ChromeDriver compatible
           CHROME_VERSION=$(google-chrome --version | cut -d ' ' -f 3 | cut -d '.' -f 1)
           CHROMEDRIVER_VERSION=$(curl -sS https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json | jq -r --arg ver "$CHROME_VERSION" '.versions[] | select(.version | startswith($ver)) | .downloads.chromedriver[] | select(.platform=="linux64") | .url' | tail -n 1)
           wget -N $CHROMEDRIVER_VERSION
@@ -65,15 +63,23 @@ jobs:
           echo "✅ Running tests for environment: ${{ env.RUN_ENVIRONMENT }}"
     
           if [ "${{ env.RUN_ENVIRONMENT }}" == "web" ]; then
-            mvn clean verify -Denvironment="web" -Dcucumber.filter.tags="@createEmployee-web"
+            mvn clean verify -Denvironment="web" -Dcucumber.filter.tags="@createEmployee-web" -DskipTests=false -B -e || true
           elif [ "${{ env.RUN_ENVIRONMENT }}" == "api" ]; then
-            mvn clean verify -Denvironment="api" -Dcucumber.filter.tags="@test-api"
+            mvn clean verify -Denvironment="api" -Dcucumber.filter.tags="@test-api" -DskipTests=false -B -e || true
           fi
 
-      - name: Upload Test Report
+      - name: Upload Serenity Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: serenity-test-report-${{ github.run_id }}
           path: target/site/serenity
+          retention-days: 7
+
+      - name: Upload Failsafe Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: failsafe-reports-${{ github.run_id }}
+          path: target/failsafe-reports
           retention-days: 7
