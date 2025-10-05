@@ -11,10 +11,9 @@ This repository houses tests for user login functionality to the Orange platform
 
 3 JDK 21
 
-
 # Execute testing
 
-
+![createEmployee.gif](images/createEmployee.gif)
 
 
 ## Local

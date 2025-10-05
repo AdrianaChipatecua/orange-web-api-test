@@ -1,11 +1,3 @@
-# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
-
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
 name: Dav-Orange-Test
 
 on:
@@ -21,59 +13,66 @@ on:
         options:
           - web
           - api
-        required: true  
+        required: true
+        default: 'web'
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up JDK 21
-      uses: actions/setup-java@v3
-      with:
-        java-version: '21'
-        distribution: 'temurin'
-    - name: Cache Maven packages
-      uses: actions/cache@v3
-      with:
-        path: ~/.m2
-        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-        restore-keys: ${{ runner.os }}-m2-
-    - name: Install Chrome
-      run: |
-        wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb || true
-        sudo apt install ./google-chrome-stable_current_amd64.deb || true
-    - name: Check Chrome Version
-      run: |
-        google-chrome --version || true
-    - name: Install ChromeDriver
-      run: |
-        CHROME_VERSION=$(google-chrome --version | sed -E 's/Google Chrome ([0-9]+).*/\1/')
-        CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION}")
-        wget "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip" || true
-        unzip chromedriver_linux64.zip || true
-        sudo mv chromedriver /usr/local/bin/ || true
-        sudo chmod +x /usr/local/bin/chromedriver || true
-    - name: Run scenarios
-      env:
-        WEB_URL: ${{ secrets.WEB_URL }}
-        SUCCESSFUL_USER: ${{ secrets.SUCCESSFUL_USER_NAME }}
-        SUCCESSFUL_PASSWORD: ${{ secrets.SUCCESSFUL_PASSWORD }}
-        BASE_ENDPOINT: ${{ secrets.BASE_ENDPOINT }}
-        USER_TOKEN: ${{ secrets.USER_TOKEN }}
-      run: |
-        if [ "${{ inputs.entorno }}" == "web" ]; then
-          mvn clean verify -Denvironment="web" -Dcucumber.filter.tags="@createEmployee-web" -DskipTests=false
-        elif [ "${{ inputs.entorno }}" == "api" ]; then
-          mvn clean verify -Denvironment="api" -Dcucumber.filter.tags="@test-api" -DskipTests=false
-        fi
-    - name: List Serenity Report
-      run: ls -R target/site/serenity || echo "No files found"
-    - name: UploadReport
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: Generate report
-        path: target/site/serenity
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2-
+
+
+      - name: Install Chrome and ChromeDriver
+        run: |
+          # Instalación de Chrome
+          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          sudo apt-get update
+          sudo apt-get install -y ./google-chrome-stable_current_amd64.deb
+          
+          # Instalación de ChromeDriver compatible
+          CHROME_VERSION=$(google-chrome --version | cut -d ' ' -f 3 | cut -d '.' -f 1)
+          CHROMEDRIVER_VERSION=$(curl -sS https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json | jq -r --arg ver "$CHROME_VERSION" '.versions[] | select(.version | startswith($ver)) | .downloads.chromedriver[] | select(.platform=="linux64") | .url' | tail -n 1)
+          wget -N $CHROMEDRIVER_VERSION
+          unzip chromedriver-linux64.zip
+          sudo mv chromedriver-linux64/chromedriver /usr/local/bin/
+          sudo chmod +x /usr/local/bin/chromedriver
+
+      - name: Run scenarios
+        env:
+          RUN_ENVIRONMENT: ${{ github.event_name == 'workflow_dispatch' && inputs.entorno || 'web' }}
+          WEB_URL: ${{ secrets.WEB_URL }}
+          SUCCESSFUL_USER: ${{ secrets.SUCCESSFUL_USER_NAME }}
+          SUCCESSFUL_PASSWORD: ${{ secrets.SUCCESSFUL_PASSWORD }}
+          BASE_ENDPOINT: ${{ secrets.BASE_ENDPOINT }}
+          USER_TOKEN: ${{ secrets.USER_TOKEN }}
+        run: |
+          echo "✅ Running tests for environment: ${{ env.RUN_ENVIRONMENT }}"
+    
+          if [ "${{ env.RUN_ENVIRONMENT }}" == "web" ]; then
+            mvn clean verify -Denvironment="web" -Dcucumber.filter.tags="@createEmployee-web"
+          elif [ "${{ env.RUN_ENVIRONMENT }}" == "api" ]; then
+            mvn clean verify -Denvironment="api" -Dcucumber.filter.tags="@test-api"
+          fi
+
+      - name: Upload Test Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: serenity-test-report-${{ github.run_id }}
+          path: target/site/serenity
+          retention-days: 7
