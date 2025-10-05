@@ -68,14 +68,9 @@ jobs:
           mvn clean verify -Denvironment="web" -Dcucumber.filter.tags="@createEmployee-web" -DskipTests=false
         elif [ "${{ inputs.entorno }}" == "api" ]; then
           mvn clean verify -Denvironment="api" -Dcucumber.filter.tags="@test-api" -DskipTests=false
-        fi  
-    - name: Generate report
-      run: |
-        mvn serenity:aggregate
-        mvn serenity:reports
-
+        fi
     - name: UploadReport
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Generate report
-        path: ~/reports
+        path: target/site/serenity
