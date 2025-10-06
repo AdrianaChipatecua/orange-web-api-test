@@ -11,8 +11,8 @@ public class Constants {
     public static final int WAIT_LONG_SECONDS = 10;
     public static final String SUCCESSFUL_USER_NAME = System.getenv("SUCCESSFUL_USER_NAME");
     public static final String SUCCESSFUL_PASSWORD = System.getenv("SUCCESSFUL_PASSWORD");
-    public static final String USER_NAME_API = "user name from api request";
+    public static final String RESPONSE_BODY = "response body api request";
     public static final String TOKEN_API = "token from api request";
-    public static final String USER_TOKEN = System.getenv("USER_TOKEN");
-    public static final String JOB_DESCRIPTION = "job description";
+    public static final String SESSION_COOKIE = "SESSION COOKIE";
+
 }

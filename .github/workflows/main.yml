@@ -55,7 +55,7 @@ jobs:
         env:
           RUN_ENVIRONMENT: ${{ github.event_name == 'workflow_dispatch' && inputs.entorno || 'web' }}
           WEB_URL: ${{ secrets.WEB_URL }}
-          SUCCESSFUL_USER: ${{ secrets.SUCCESSFUL_USER_NAME }}
+          SUCCESSFUL_USER: ${{ secrets.SUCCESSFUL_USER }}
           SUCCESSFUL_PASSWORD: ${{ secrets.SUCCESSFUL_PASSWORD }}
           BASE_ENDPOINT: ${{ secrets.BASE_ENDPOINT }}
           USER_TOKEN: ${{ secrets.USER_TOKEN }}

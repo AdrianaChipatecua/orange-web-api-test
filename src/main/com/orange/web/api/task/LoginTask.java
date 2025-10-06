@@ -30,6 +30,6 @@ public class LoginTask implements Task {
         Enter.theValue(Constants.SUCCESSFUL_USER_NAME).into(LoginPage.INP_USERNAME),
         Enter.theValue(Constants.SUCCESSFUL_PASSWORD).into(LoginPage.INP_PASSWORD),
         Click.on(LoginPage.LOGIN_BUTTON),
-        WaitUntil.the((TopBarPage.TITLE_DASHBOARD), isVisible()).forNoMoreThan(Constants.WAIT_LONG_SECONDS).seconds());
+        WaitUntil.the((TopBarPage.TITLE_DASHBOARD), isVisible()).forNoMoreThan(20).seconds());
   }
 }
