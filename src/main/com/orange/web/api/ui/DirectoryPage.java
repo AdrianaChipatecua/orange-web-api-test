@@ -12,7 +12,7 @@ public class DirectoryPage {
   public static final Target LBL_EMPLOYEE_NAME = Target.the("label employee name")
       .locatedBy("//label[normalize-space()='Employee Name']");
   public static final Target INP_EMPLOYEE_NAME = Target.the("text employee name")
-      .locatedBy("//input[@placeholder='Type for hints...']");
+      .locatedBy("(//input[@placeholder='Type for hints...'])[1]");
   public static final Target DROPDOWN_OPTION = Target
       .the("Opción del autocomplete")
       .locatedBy("//div[@role='listbox']//div[normalize-space()='{0}']");
