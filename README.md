@@ -1,7 +1,14 @@
 # test-orange-web-api
-This repository houses tests for user login functionality to the Orange platform, as well as related API calls
+This repository contains automated tests for validating the user login functionality of the OrangeHRM platform, covering both UI (web) and API layers.
 
-# Setup
+### It includes:
+
+- Web UI tests executed through Serenity BDD using the Screenplay pattern.
+
+- API validation tests to verify token generation, cookie management, and authentication endpoints.
+
+- Continuous Integration workflows (via GitHub Actions) that build, execute, and publish Serenity test reports automatically.
+## Setup
 
 ### Requirements
 
@@ -11,12 +18,12 @@ This repository houses tests for user login functionality to the Orange platform
 
 3 JDK 21
 
-# Execute testing
+## Execute testing
 
-## Create Employee
+### Create Employee
 ![createEmployee.gif](images/createEmployee.gif)
 
-## loginEmployee API
+### loginEmployee API
 
 ![ApiTest.gif](images/ApiTest.gif)
 
@@ -31,15 +38,15 @@ To execute the tests, please run the next command :
 
 1 On GitHub, navigate to the main page of the repository.
 
-2 Under test-orange-web-api repository name, click  Actions. 
+2 Under orange-web-api-test repository name, click  Actions. 
 
 
-3 In the left sidebar, click “Test Orange” to start the workflow.
+3 In the left sidebar, click “Dav-Orange-Test” to start the workflow.
 
 
 4 Click the 'Run workflow' button above the workflow runs list, and then choose whether you want to run Web or API tests.
 
-
+![img.png](images/img.png)
 
 More about Manually running a workflow : 
 https://docs.github.com/en/actions/managing-workflow-runs-and-deployments/managing-workflow-runs/manually-running-a-workflow

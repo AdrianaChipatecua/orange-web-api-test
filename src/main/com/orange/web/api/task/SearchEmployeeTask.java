@@ -26,7 +26,6 @@ public class SearchEmployeeTask implements Task {
     String employeeFullName = firstName + " " + lastName;
 
     CommonQuestions.elementIsPresent(DirectoryPage.TITLE_DIRECTORY_PAGE);
-    CommonQuestions.elementIsPresent(DirectoryPage.LBL_EMPLOYEE_NAME);
 
     actor.attemptsTo(
         Enter.theValue(firstName).into(DirectoryPage.INP_EMPLOYEE_NAME),

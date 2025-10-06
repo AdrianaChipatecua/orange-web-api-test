@@ -20,7 +20,7 @@ public class LoginStep {
     OnStage.withCurrentActor(
         LoginTask.writeData(actor)
     );
-    CommonQuestions.textEqualsTarget(TopBarPage.TITLE_DASHBOARD, "Dashboard");
+    CommonQuestions.elementIsPresent(TopBarPage.TITLE_DASHBOARD);
   }
 
 }

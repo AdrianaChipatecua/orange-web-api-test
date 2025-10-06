@@ -1,17 +1,18 @@
 package com.orange.web.api.ui;
 
 import net.serenitybdd.screenplay.targets.Target;
+import org.openqa.selenium.By;
 
 public class CreateEmployeePimOptionPage {
     private CreateEmployeePimOptionPage() {
     }
 
     public static Target INP_FIRST_NAME = Target.the("input first name")
-            .locatedBy(".oxd-input--active[placeholder='First Name']");
+            .located(By.cssSelector("input[name='firstName']"));
     public static Target INP_LAST_NAME = Target.the("input first name")
-            .locatedBy(".oxd-input--active[placeholder='Last Name']");
+            .locatedBy(".oxd-input--active[name='lastName']");
     public static Target INP_MIDDLE_NAME = Target.the("input middle name")
-            .locatedBy(".oxd-input--active[placeholder='Middle Name']");
+            .locatedBy(".oxd-input.oxd-input--active[name='middleName']");
     public static Target OPT_SWITCH_LOGIN_DETAILS = Target.the("input last name")
             .locatedBy(".oxd-switch-input");
     public static Target INP_EMPLOYEE_ID = Target.the("input employee id")
@@ -22,12 +23,8 @@ public class CreateEmployeePimOptionPage {
             .locatedBy("(//input[@type='password'])[1]");
     public static Target INP_CONFIRM_PASSWORD = Target.the("input confirm password")
             .locatedBy("(//input[@type='password'])[2]");
-    public static Target LBL_STATUS = Target.the("option status")
-            .locatedBy("(label.oxd-label");
-    public static Target OPT_STATUS_ACTIVE = Target.the("option status active")
-            .locatedBy("//label[normalize-space()='Enabled']");
     public static Target BTN_SAVE_EMPLOYEE = Target.the("button save")
-            .locatedBy("//button[normalize-space()='Save']");
+            .located(By.cssSelector("button[type='submit']"));
     public static Target IMG_PHOTO_UPLOAD = Target.the("campo para subir la foto" )
             .locatedBy("//input[@type='file' and contains(@class,'oxd-file-input')]");
 

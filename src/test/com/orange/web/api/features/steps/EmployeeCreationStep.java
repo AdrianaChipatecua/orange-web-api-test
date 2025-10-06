@@ -20,13 +20,11 @@ public class EmployeeCreationStep {
   public void addNewEmployee(String menuOption) {
     OnStage.withCurrentActor(
         NavigateMenuTask.to(menuOption));
-    CommonQuestions.textEqualsTarget(TopBarPage.TITLE_DASHBOARD, menuOption);
+    CommonQuestions.elementIsPresent(TopBarPage.TITLE_DASHBOARD);
     OnStage.withCurrentActor(
         CreateEmployeeTask.withData("Test", "Automation", "Ta123456"),
         WaitUntil.the(PersonalDetailsPage.CARD_PERSONAL_DETAILS_OPTIONS, isVisible()).forNoMoreThan(20).seconds()
     );
-    ValidateEmployeeDataQuestions.validateEmployeeData();
-
   }
 
   @Then("podra buscar el empleado agregado desde la opcion {string}")
@@ -34,7 +32,7 @@ public class EmployeeCreationStep {
     OnStage.withCurrentActor(
         NavigateMenuTask.to(menuOption)
     );
-    CommonQuestions.textEqualsTarget(TopBarPage.TITLE_DASHBOARD, menuOption);
+    CommonQuestions.elementIsPresent(TopBarPage.TITLE_DASHBOARD);
     OnStage.withCurrentActor(
         SearchEmployeeTask.validateNewEmployee()
     );

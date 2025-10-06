@@ -27,6 +27,7 @@ public class LoginTask implements Task {
     );
     CommonQuestions.tryElementIsPresent(LoginPage.IMG_BRANDING, Constants.WAIT_TIME);
     actor.attemptsTo(
+        WaitUntil.the((LoginPage.INP_USERNAME), isVisible()).forNoMoreThan(20).seconds(),
         Enter.theValue(Constants.SUCCESSFUL_USER_NAME).into(LoginPage.INP_USERNAME),
         Enter.theValue(Constants.SUCCESSFUL_PASSWORD).into(LoginPage.INP_PASSWORD),
         Click.on(LoginPage.LOGIN_BUTTON),
