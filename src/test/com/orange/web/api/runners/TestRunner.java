@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         plugin = {"pretty", "rerun:target/rerun.txt"},
         features = {"classpath:features"},
-        tags = "@createEmployee-web",
+        tags = "@test-api",
         glue = {"com.orange.web.api.features.steps"}
 )
 public class TestRunner {
