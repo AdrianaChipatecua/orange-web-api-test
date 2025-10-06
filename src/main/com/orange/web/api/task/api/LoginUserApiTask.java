@@ -31,7 +31,6 @@ public class LoginUserApiTask implements Task {
         userRegistrationData.getUserName(),
         userRegistrationData.getPassword()
     );
-    System.out.println("Request Body: " + requestBody);
 
     actor.attemptsTo(
         Post.to(endpoint)

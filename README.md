@@ -13,8 +13,12 @@ This repository houses tests for user login functionality to the Orange platform
 
 # Execute testing
 
+## Create Employee
 ![createEmployee.gif](images/createEmployee.gif)
 
+## loginEmployee API
+
+![ApiTest.gif](images/ApiTest.gif)
 
 ## Local
 
